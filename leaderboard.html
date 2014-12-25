@@ -28,12 +28,18 @@
   {{else}}
     <div class="message">Click a player to select</div>
   {{/if}}
+  
+  <form class="addPlayerBox">
+    <input id="addPlayerButton" type="text" class="playerName" placeholder="Enter new player's name"/>
+    <button class="submitButton">Add player</button>
+  </form>
 </template>
 
 <template name="player">
   <li class="player {{selected}}">
     <span class="name">{{name}}</span>
     <span class="score">{{score}}</span>
+    <span class="cross">X</span>
   </li>
 </template>
 

@@ -17,6 +17,17 @@ if (Meteor.isClient) {
   Template.leaderboard.events({
     'click .inc': function () {
       Players.update(Session.get("selectedPlayer"), {$inc: {score: 5}});
+    },
+    'click .submitButton': function() {
+      var text = document.getElementById("addPlayerButton").value;
+      if (text) {
+        Players.insert({
+          name: text,
+          score: Math.floor(Random.fraction() * 10) * 5
+        });
+        document.getElementById("addPlayerButton").value = "";
+      }
+      return false;
     }
   });
 
@@ -29,6 +40,9 @@ if (Meteor.isClient) {
   Template.player.events({
     'click': function () {
       Session.set("selectedPlayer", this._id);
+    },
+    'click .cross': function() {
+      Players.remove(Session.get("selectedPlayer",this._id));
     }
   });
 }
