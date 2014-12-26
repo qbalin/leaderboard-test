@@ -18,14 +18,17 @@ if (Meteor.isClient) {
     'click .inc': function () {
       Players.update(Session.get("selectedPlayer"), {$inc: {score: 5}});
     },
-    'click .submitButton': function() {
-      var text = document.getElementById("addPlayerButton").value;
-      if (text) {
+    'click .submitButton': function(event, template) {
+      var newName  = template.find(".addPlayerBox .name").value;
+      var newField = template.find(".addPlayerBox .field").value;
+      if (newName && newField) {
         Players.insert({
-          name: text,
-          score: Math.floor(Random.fraction() * 10) * 5
+          name: newName,
+          score: Math.floor(Random.fraction() * 10) * 5,
+          field: newField
         });
-        document.getElementById("addPlayerButton").value = "";
+        template.find(".addPlayerBox .name").value = "";
+        template.find(".addPlayerBox .field").value = "";
       }
       return false;
     }
@@ -45,6 +48,27 @@ if (Meteor.isClient) {
       Players.remove(Session.get("selectedPlayer",this._id));
     }
   });
+
+  Template.fieldsComboBox.helpers({
+    fields: function () {
+      var fieldsList =  _.uniq(Players
+                            .find({},{sort: {field:1}, fields:{field:1}})
+                            .map(function(x){return x.field})
+                          ,true);
+      return fieldsList;
+    }
+  });
+
+  Template.fieldsComboBox.rendered = function() {
+    this.find("select").value = this.data.field;
+  }
+
+  Template.fieldsComboBox.events ({
+    'change select': function (event,template) {
+      var newField = template.find("select").value; 
+      Players.update(this._id,{$set: {field: newField}});
+    }
+  });
 }
 
 // On server startup, create some players if the database is empty.
@@ -53,12 +77,16 @@ if (Meteor.isServer) {
     if (Players.find().count() === 0) {
       var names = ["Ada Lovelace", "Grace Hopper", "Marie Curie",
                    "Carl Friedrich Gauss", "Nikola Tesla", "Claude Shannon"];
-      _.each(names, function (name) {
+      var domains = ["Algorithmics", "Algorithmics", "Chemistry",
+                     "Mathematics", "Physics", "Mathematics"];
+      for (var i = 0, c = names.length; i < c; ++i) {
         Players.insert({
-          name: name,
-          score: Math.floor(Random.fraction() * 10) * 5
+          name: names[i],
+          score: Math.floor(Random.fraction() * 10) * 5,
+          field: domains[i]
         });
-      });
+      }
     }
   });
 }
+

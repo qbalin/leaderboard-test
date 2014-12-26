@@ -30,7 +30,8 @@
   {{/if}}
   
   <form class="addPlayerBox">
-    <input id="addPlayerButton" type="text" class="playerName" placeholder="Enter new player's name"/>
+    <input type="text" class="name" placeholder="Enter new player's name"/>
+    <input type="text" class="field" placeholder="Field of study"/>
     <button class="submitButton">Add player</button>
   </form>
 </template>
@@ -38,8 +39,17 @@
 <template name="player">
   <li class="player {{selected}}">
     <span class="name">{{name}}</span>
+    {{>fieldsComboBox}}
     <span class="score">{{score}}</span>
     <span class="cross">X</span>
   </li>
+</template>
+
+<template name="fieldsComboBox">
+  <select>
+    {{#each fields}}
+      <option value="{{this}}">{{this}}</option>
+    {{/each}}
+  </select>
 </template>
 
