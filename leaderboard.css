@@ -207,7 +207,15 @@ body {
   height: 40px;
 }
 
-.addPlayerBox .playerName {
+.addPlayerBox .name, .addPlayerBox .field {
   height: 40px;
+  max-width: 33%;
 }
 
+footer {
+  display:inline-block;
+  position: absolute;
+  background: yellow;
+  left: 50%;
+  margin-top: 20px;
+}

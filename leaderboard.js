@@ -1,7 +1,25 @@
 // Set up a collection to contain player information. On the server,
 // it is backed by a MongoDB collection named "players".
 
-Players = new Mongo.Collection("players");
+Players = new Mongo.Collection('players');
+
+Router.route('/', function () {
+  this.layout('app');
+  this.render('leaderboard')
+  this.render('footer', {
+    to: 'footer',
+    data: {path: '/about' ,text: 'About'}
+  });
+});
+
+Router.route('/about', function() {
+  this.layout('app');
+  this.render('about');
+  this.render('footer', {
+    to: 'footer',
+    data: {path: '/', text: 'Home'}
+  });
+});
 
 if (Meteor.isClient) {
   Template.leaderboard.helpers({

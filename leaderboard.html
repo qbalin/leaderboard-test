@@ -5,15 +5,29 @@
 </head>
 
 <body>
+</body>
+
+<template name="app">
   <div class="outer">
     <div class="logo"></div>
     <h1 class="title">Leaderboard</h1>
-    <div class="subtitle">Select a scientist to give them points</div>
-    {{> leaderboard}}
+    {{>yield}}
   </div>
-</body>
+  {{>yield "footer"}}
+</template>
+
+<template name="about">
+  <p>Welcome on my-leaderboard! The application derived from Meteor's example to start learning the basics</p>
+</template>
+
+<template name="footer">
+  <footer>
+    <a href="{{path}}">{{text}}</a>
+  </footer>
+</template>
 
 <template name="leaderboard">
+  <div class="subtitle">Select a scientist to give them points</div>
   <ol class="leaderboard">
     {{#each players}}
       {{> player}}
@@ -30,7 +44,7 @@
   {{/if}}
   
   <form class="addPlayerBox">
-    <input type="text" class="name" placeholder="Enter new player's name"/>
+    <input type="text" class="name" placeholder="New player's name"/>
     <input type="text" class="field" placeholder="Field of study"/>
     <button class="submitButton">Add player</button>
   </form>
