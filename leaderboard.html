@@ -8,9 +8,9 @@
   <div class="outer">
     <div class="logo"></div>
     <h1 class="title">Leaderboard</h1>
-    {{>yield}}
+    {{> yield}}
   </div>
-  {{>yield "footer"}}
+  {{> yield "footer"}}
 </template>
 
 <template name="about">
@@ -30,6 +30,12 @@
 <template name="leaderboard">
   <div class="subtitle">Select a scientist to give them points</div>
   <button class="forker">Fork the Leaderboard!</button>
+  <div class="sortingBox">
+    <span>Sort by: </span>
+    {{#each sortButtons}}
+      {{> sortButton}}
+    {{/each}}
+  </div>
   <ol class="leaderboard">
     {{#each players}}
       {{> player}}
@@ -38,7 +44,9 @@
 
   {{#if selectedName}}
     <div class="details">
-      <div class="name">{{selectedName}}</div>
+      <div class="name">{{selectedName}}
+        {{> fieldsComboBox}}
+      </div>
       <button class="inc">Add 5 points</button>
     </div>
   {{else}}
@@ -55,17 +63,20 @@
 <template name="player">
   <li class="player {{selected}}">
     <span class="name">{{name}}</span>
-    {{>fieldsComboBox}}
+    <span class="field">{{field}}</span>
     <span class="score">{{score}}</span>
     <span class="cross">X</span>
   </li>
 </template>
 
 <template name="fieldsComboBox">
-  <select>
+  <select class="fieldComboBox">
     {{#each fields}}
       <option value="{{this}}">{{this}}</option>
     {{/each}}
   </select>
 </template>
 
+<template name="sortButton">
+  <button>{{label}}</button>
+</template>
