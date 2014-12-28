@@ -30,6 +30,11 @@ Router.route('/fork/:idx', function () {
     this.render('leaderboard');
   } else {
     this.render('noLeaderboard');
+    this.render('footer', {
+    to: 'footer',
+    data: {path: '/', text: 'Home'}
+  });
+
   }
 });
 

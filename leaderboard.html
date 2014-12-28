@@ -15,6 +15,17 @@
 
 <template name="about">
   <p>Welcome on my-leaderboard! The application derived from Meteor's example to start learning the basics</p>
+  <ol>
+    <li>A forked table should have no footer ("About") by construction (my choice).
+      When accessed by the "fork the leaderboard" button on the home page, it 
+      keeps the footer of "/". I would like to "unrender" this template.<br/>
+      When accessed by the navigator, all the page is re-rendered and the footer
+      is not rendered, as expected.
+    </li>
+    <li>Should I ever use the keyword "document" in the .js? I feel like it is 
+      wrong.
+    </li>
+  </ol>
 </template>
 
 <template name="footer">
@@ -24,7 +35,7 @@
 </template>
 
 <template name="noLeaderboard">
-  <p>There is no leaderboard yet at this index. Keep forking!</p>
+  <p>There is no leaderboard at this index. Keep forking!</p>
 </template>
 
 <template name="leaderboard">
@@ -44,9 +55,8 @@
 
   {{#if selectedName}}
     <div class="details">
-      <div class="name">{{selectedName}}
-        {{> fieldsComboBox}}
-      </div>
+      <div class="name">{{selectedName}}</div>
+      {{> fieldsComboBox}}
       <button class="inc">Add 5 points</button>
     </div>
   {{else}}
@@ -78,5 +88,5 @@
 </template>
 
 <template name="sortButton">
-  <button>{{label}}</button>
+  <button class="{{label}}">{{label}}</button>
 </template>
